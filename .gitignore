@@ -1,15 +1,62 @@
-# Virtual Environment
+# ====================
+# Python & Environment
+# ====================
 venv/
+.env
 
-# IDE specific
-.vscode/
-.idea/
-
-# Test artifacts/reports
-reports/allure-report/
-*.log
-
-# Byte-compiled / optimized / DLL files
+# Кэш Python и скомпилированные файлы
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyo
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==================
+# IDE Configuration
+# ==================
+.vscode/
+.idea/
+
+# ===========
+# Test Assets
+# ===========
+# Сырые результаты прогонов (JSON-файлы)
+reports/
+allure-results/
+
+# Готовые отчеты (HTML)
+# После формирования аллюр-отчета добавим его принудительно через git add -f allure-report/
+allure-report/
+
+# Логи выполнения
+*.log
+
+# Selenium / WebDriverManager 
+drivers/
+chromedriver*
+geckodriver*
+*.exe
+
+# Временные файлы ОС
+.DS_Store
+Thumbs.db
+
+# Pytest cache
+.pytest_cache/
+.coverage
+htmlcov/
