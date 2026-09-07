@@ -1,0 +1,15 @@
+# Virtual Environment
+venv/
+
+# IDE specific
+.vscode/
+.idea/
+
+# Test artifacts/reports
+reports/allure-report/
+*.log
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
