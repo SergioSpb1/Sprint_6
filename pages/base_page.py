@@ -19,11 +19,9 @@ class BasePage:
     def click_element_with_wait(self, locator):
         element = self.wait.until(EC.element_to_be_clickable(locator)) 
         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element) 
-        # Используем JS вместо .click() — ему не страшны никакие оверлеи 
         self.driver.execute_script("arguments[0].click();", element)
 
     def _close_cookies_if_present(self): 
-        # Закрывает окно куки, если оно появилось. 
         try: 
             button = self.wait.until(EC.element_to_be_clickable(Locators.COOK)) 
             button.click() 

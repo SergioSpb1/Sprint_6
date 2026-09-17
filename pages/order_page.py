@@ -66,10 +66,7 @@ class OrderPage(BasePage):
         field.clear()
         field.send_keys(date_str)
         self.driver.execute_script("arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", field)
-        #self.driver.execute_script("arguments[0].blur();", field)
         self.driver.find_element(By.TAG_NAME, "body").click() 
-
-        print(f"[DEBUG] Вставлена дата: {date_str}")
 
     def select_rent_period(self, period_text):
         element = self.find_element_with_wait(Locators.RENT_DURATION_INPUT)
@@ -106,7 +103,7 @@ class OrderPage(BasePage):
 
         target_date = order_details["delivery_date"]
         self.select_date(target_date)
-        time.sleep(0.5) # Пауза после закрытия календаря
+        time.sleep(0.5) 
         target_period = order_details["rent_period"]
         self.select_rent_period(target_period)
         self.select_colour(order_details["colour"])
