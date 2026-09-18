@@ -1,7 +1,6 @@
-from data import Data, FaqData
+from data import FaqData
 from pages.main_page import MainPageScooters
 import pytest
-import time
 import allure
 
 class TestMain:
@@ -12,11 +11,9 @@ class TestMain:
     def test_faq_questions(self, driver, test_case):
 
         main_page = MainPageScooters(driver)
-        driver.get(Data.BASE_URL)
-   
+        main_page.open()
         q_text = test_case["question_text"] 
         expected_answer = test_case["answer_text"]
-
         main_page.click_question_by_text(q_text) 
         actual_answer = main_page.get_open_answer_text()
 

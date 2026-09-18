@@ -56,7 +56,8 @@ geckodriver*
 .DS_Store
 Thumbs.db
 
-# Pytest cache
+# Pytest cache #_
 .pytest_cache/
 .coverage
 htmlcov/
+

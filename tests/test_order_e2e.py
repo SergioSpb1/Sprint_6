@@ -1,9 +1,7 @@
-from data import Data, OrderData
+from data import OrderData
 from locators import Locators
 from pages.main_page import MainPageScooters
 from pages.order_page import OrderPage
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 import pytest
 import allure
 
@@ -16,19 +14,19 @@ class TestOrder:
     def test_order_e2e(self, driver, test_context):
 
         main_page = MainPageScooters(driver)
-        driver.get(Data.BASE_URL)
+        main_page.open()
 
-        if test_context["entry_point"] == "top": 
-            main_page.click_top_order_button()
-        else: 
-            main_page.click_bottom_order_button()
+        #Формируем имя нужного метода клика кнопки (верхней или нижней) вместо условий, согласно замечанию ревьювера
+        method_name = f"click_{test_context['entry_point']}_order_button"
+        getattr(main_page, method_name)()
 
         order_page = OrderPage(driver)
         order_page.fill_form_one(test_context)
         order_page.fill_form_two(test_context)
         order_page.confirm_order()
 
-        assert WebDriverWait(driver, 3).until(EC.visibility_of_element_located(Locators.ORDER_CONFIRMATION_HEADER))
+        confirmation_header = order_page.find_element_with_wait(Locators.ORDER_CONFIRMATION_HEADER)
+        assert confirmation_header.is_displayed() 
    
   
         

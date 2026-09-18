@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 class Locators:
     #Локаторы главной страницы
+    QUESTION = lambda text: (By.XPATH, f"//*[contains(text(), '{text}')]")
     ACTUAL_ANSWER = (By.XPATH, "//div[@data-accordion-component='AccordionItemPanel' and not(@hidden)]/p")
     COOK = (By.ID, "rcc-confirm-button")
     MAIN_TOP_ORDER_BUTTON = (By.XPATH, "//div[@class='Header_Nav__AGCXC']//button[text()='Заказать']")
@@ -15,9 +16,11 @@ class Locators:
     METRO_INPUT = (By.XPATH, "//input[@placeholder='* Станция метро']" )    # Пункты выпадающего списка метро (когда кликнем в поле выше) 
     METRO_SUGGESTIONS_LIST = (By.XPATH, "//input[@placeholder='* Станция метро']/ancestor::div[contains(@class, 'select-search')]//following-sibling::div[.//text()]" )
     NEXT_BUTTON = (By.XPATH, "//button[text()='Далее']")
+    BODY_PAGE = (By.TAG_NAME, "body")
 
     #Локаторы страницы заказа самоката, экран 2
     DELIVERY_DATE_INPUT = (By.XPATH, "//input[contains(@placeholder, 'привезти самокат')]")
+    #DATE_PICKER_WRAPPER = (By.CSS_SELECTOR, ".react-datepicker__month-container")
     RENT_DURATION_INPUT = (By.CLASS_NAME, "Dropdown-placeholder")
     RENT_DURATION_OPTION_TEMPLATE = ( By.XPATH, "//div[contains(@class, 'Dropdown-option') and normalize-space(text())='{}']" )
     COLOUR_BLACK = (By.ID, "black") 

@@ -1,21 +1,18 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.common.exceptions import TimeoutException
 from locators import Locators
+from data import Data
 from pages.base_page import BasePage
 import allure
 
 class MainPageScooters (BasePage):
 
-    def __init__(self, driver):
-        self.driver = driver
-        super().__init__(driver)
+    @allure.step("Открытие базового URL")
+    def open(self): 
+        self._go_to(Data.BASE_URL)
 
-    @allure.step("Клик вопроса {question_text}")
+    @allure.step("Клик вопроса")
     def click_question_by_text(self, question_text):
-        dynamic_locator = (By.XPATH, f"//*[contains(text(), '{question_text}')]" )
-        self.click_element_with_wait(dynamic_locator)
+        locator = Locators.QUESTION(question_text) 
+        self.click_element_with_wait(locator)
 
     @allure.step("Получение ответа на вопрос")
     def get_open_answer_text(self):
@@ -29,6 +26,8 @@ class MainPageScooters (BasePage):
     @allure.step("Клик нижней кнопки 'Заказать'")
     def click_bottom_order_button (self):
         self.click_element_with_wait(Locators.MAIN_BOTTOM_ORDER_BUTTON)
+
+    
     
  
         

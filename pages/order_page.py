@@ -1,6 +1,3 @@
-import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from locators import Locators
 from pages.base_page import BasePage
 import allure
@@ -36,10 +33,9 @@ class OrderPage(BasePage):
         field = self.find_element_with_wait(Locators.METRO_INPUT)
     
         field.click()
-        time.sleep(0.5)
         field.send_keys("С") 
     
-        items = self.wait.until(EC.presence_of_all_elements_located(Locators.METRO_SUGGESTIONS_LIST))
+        items = self.find_elements_with_wait(Locators.METRO_SUGGESTIONS_LIST)
         items[index].click()
             
     @allure.step("Нажатие кнопки 'Далее'")
@@ -47,7 +43,7 @@ class OrderPage(BasePage):
         dalee_button = self.find_element_with_wait(Locators.NEXT_BUTTON)
         dalee_button.click()
 
-    
+    @allure.step("Заполнение формы с данными пользователя") 
     def fill_form_one(self, user_data):
 
         self.fill_name(user_data["name"])
@@ -58,52 +54,48 @@ class OrderPage(BasePage):
         self.fill_phone(user_data["phone"])
         self.submit_form_1()
 
+    @allure.step("Выбор даты из календаря") 
     def select_date(self, date_str):
         field = self.find_element_with_wait(Locators.DELIVERY_DATE_INPUT)
-
         field.click()
-        time.sleep(0.3)
         field.clear()
         field.send_keys(date_str)
-        self.driver.execute_script("arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", field)
-        self.driver.find_element(By.TAG_NAME, "body").click() 
+        self._execute_js("arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", field)
+        self.click_page_body()
 
+    @allure.step("Выбор периода аренды") 
     def select_rent_period(self, period_text):
         element = self.find_element_with_wait(Locators.RENT_DURATION_INPUT)
         element.click()
-
-        time.sleep(0.5)
-
         by_type, template_str = Locators.RENT_DURATION_OPTION_TEMPLATE 
         option_locator = (by_type, template_str.format(period_text))
+        target_option = self.find_clickable_element_with_wait(option_locator)
+        self._execute_js("arguments[0].click();", target_option)
 
-        target_option = self.wait.until(EC.element_to_be_clickable(option_locator)) 
-        self.driver.execute_script("arguments[0].click();", target_option)
-        
+    @allure.step("Выбор цвета самоката")     
     def select_colour (self, colour_value):
 
         colour_map = {"чёрный жемчуг": Locators.COLOUR_BLACK, "серая безысходность": Locators.COLOUR_GREY}
-
         locator = colour_map.get(colour_value.lower())
-
-        checkbox = self.find_element_with_wait(locator)
+        checkbox = self.find_clickable_element_with_wait(locator)
         checkbox.click()
 
+    @allure.step("Ввод комментария к заказу") 
     def put_comment(self, comment_text):
 
         comment = self.find_element_with_wait(Locators.COMMENT_INPUT)
         comment.send_keys(comment_text)
 
+    @allure.step("Нажатие кнопки 'Заказать' на экране деталей") 
     def submit_form_2(self):
-            order_button = self.find_element_with_wait(Locators.FINAL_ORDER_BUTTON)
-            order_button.click()
+        order_button = self.find_element_with_wait(Locators.FINAL_ORDER_BUTTON)
+        order_button.click()
 
-    @allure.step("Заполнение деталей заказа")
+    @allure.step("Заполнение формы с деталями заказа") 
     def fill_form_two(self, order_details):
 
         target_date = order_details["delivery_date"]
         self.select_date(target_date)
-        time.sleep(0.5) 
         target_period = order_details["rent_period"]
         self.select_rent_period(target_period)
         self.select_colour(order_details["colour"])
@@ -112,7 +104,7 @@ class OrderPage(BasePage):
 
     @allure.step("Подтверждение заказа") 
     def confirm_order(self):
-        self.find_element_with_wait(Locators.CONFIRM_ORDER_BUTTON).click()
+        self.find_clickable_element_with_wait(Locators.CONFIRM_ORDER_BUTTON).click()
 
     @allure.step("Клик логотипа Самокат")            
     def click_samokat_logo (self):
