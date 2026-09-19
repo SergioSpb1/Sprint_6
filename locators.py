@@ -20,7 +20,6 @@ class Locators:
 
     #Локаторы страницы заказа самоката, экран 2
     DELIVERY_DATE_INPUT = (By.XPATH, "//input[contains(@placeholder, 'привезти самокат')]")
-    #DATE_PICKER_WRAPPER = (By.CSS_SELECTOR, ".react-datepicker__month-container")
     RENT_DURATION_INPUT = (By.CLASS_NAME, "Dropdown-placeholder")
     RENT_DURATION_OPTION_TEMPLATE = ( By.XPATH, "//div[contains(@class, 'Dropdown-option') and normalize-space(text())='{}']" )
     COLOUR_BLACK = (By.ID, "black") 

@@ -38,6 +38,7 @@ wheels/
 # Сырые результаты прогонов (JSON-файлы)
 reports/
 allure-results/
+allure_results/
 
 # Готовые отчеты (HTML)
 # После формирования аллюр-отчета добавим его принудительно через git add -f allure-report/
